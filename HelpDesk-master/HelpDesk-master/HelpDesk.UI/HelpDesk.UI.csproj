@@ -16,6 +16,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HelpDesk.BLL\HelpDesk.BLL.csproj" />
+    <ProjectReference Include="..\HelpDesk.DAL\HelpDesk.DAL.csproj" />
+    <ProjectReference Include="..\HelpDesk.DTO\HelpDesk.DTO.csproj" />
+    <ProjectReference Include="..\HelpDesk.Model\HelpDesk.Model.csproj" />
   </ItemGroup>
 
   <ItemGroup>
