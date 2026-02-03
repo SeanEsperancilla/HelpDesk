@@ -25,6 +25,7 @@ namespace HelpDesk.UI
         private void Form1_Load(object sender, EventArgs e)
         {
             LoadDefaultValues();
+            SetUpFilter();   
             LoadTickets();
         }
 
@@ -180,9 +181,9 @@ namespace HelpDesk.UI
         {
             cmbFilterStatus.SelectedIndex = 0;
             cmbFilterCategory.SelectedIndex = 0;
-            btnResetFilter.Text = string.Empty;
+            btnApplyFilter.Text = string.Empty;
 
-            dgTickets.DataSource = _ticketService.GetAll(null, null, null).ToList();
+            LoadTickets();
         }
 
         private void chkConfirmDelete_CheckedChanged(object sender, EventArgs e)
@@ -204,21 +205,7 @@ namespace HelpDesk.UI
             if (!this.IsHandleCreated)
                 return;
 
-            string? statusFilter = cmbFilterStatus.Text != "All"
-                ? cmbFilterStatus.Text
-                : null;
-
-            int? categoryFilter = cmbFilterCategory.SelectedValue is int id && id != 0
-                ? id
-                : null;
-
-            string? keyword = string.IsNullOrWhiteSpace(btnApplyFilter.Text)
-                ? null
-                : btnApplyFilter.Text.Trim();
-
-            dgTickets.DataSource = _ticketService
-                .GetAll(statusFilter, categoryFilter, keyword)
-                .ToList();
+            ApplyFilters();
         }
 
         private void cmbFilterCategory_SelectedIndexChanged(object sender, EventArgs e)
@@ -226,30 +213,69 @@ namespace HelpDesk.UI
             if (!this.IsHandleCreated)
                 return;
 
-            string? statusFilter = cmbFilterStatus.Text != "All"
-                ? cmbFilterStatus.Text
-                : null;
-
-            int? categoryFilter = cmbFilterCategory.SelectedValue is int id && id != 0
-                ? id
-                : null;
-
-            string? keyword = string.IsNullOrWhiteSpace(btnApplyFilter.Text)
-                ? null
-                : btnApplyFilter.Text.Trim();
-
-            var tickets = _ticketService.GetAll(statusFilter, categoryFilter, keyword);
-            dgTickets.DataSource = tickets.ToList();
+            ApplyFilters();
         }
 
         private void dgTickets_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+
         }
 
         private void cmbAssignedTo_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
+
+        private void ApplyFilters()
+        {
+            string? statusFilter =
+        cmbFilterStatus.Text != "All"
+            ? cmbFilterStatus.Text
+            : null;
+
+            int? categoryFilter =
+                cmbFilterCategory.SelectedValue is int id && id != 0
+                    ? id
+                    : null;
+
+            string? keyword =
+                string.IsNullOrWhiteSpace(btnApplyFilter.Text)
+                    ? null
+                    : btnApplyFilter.Text.Trim();
+
+            dgTickets.DataSource = _ticketService
+                .GetAll(statusFilter, categoryFilter, keyword)
+                .ToList();
+        }
+
+        private void SetUpFilter()
+        {
+            cmbFilterStatus.Items.Clear();
+            cmbFilterStatus.Items.AddRange(new string[]
+            {
+                "All",
+                "New",
+                "In Progress",
+                "Resolved",
+                "Closed"
+            });
+            cmbFilterStatus.SelectedIndex = 0;
+
+            var categories = _ticketCategoryRepository.GetAll();
+
+            var categoryFilterList = new List<TicketCategory>
+            {
+                new TicketCategory { Id = 0, Name = "All" }
+            };
+            categoryFilterList.AddRange(categories);
+
+            cmbFilterCategory.DataSource = categoryFilterList;
+            cmbFilterCategory.DisplayMember = "Name";
+            cmbFilterCategory.ValueMember = "Id";
+            cmbFilterCategory.SelectedIndex = 0;
+
+            btnApplyFilter.Text = string.Empty;
+        }
+
     }
 }

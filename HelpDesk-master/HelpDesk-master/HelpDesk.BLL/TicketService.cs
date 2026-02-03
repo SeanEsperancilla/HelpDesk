@@ -16,9 +16,6 @@ namespace HelpDesk.BLL
             _ticketRepository = ticketRepository;
         }
 
-        // =========================
-        // READ
-        // =========================
         public List<DTO.Ticket> GetAll(string? status, int? category, string? keyword)
         {
             return _ticketRepository
@@ -38,9 +35,6 @@ namespace HelpDesk.BLL
                 .ToList();
         }
 
-        // =========================
-        // ADD
-        // =========================
         public (bool isOk, string message) Add(Model.Ticket ticket)
         {
             try
@@ -84,9 +78,6 @@ namespace HelpDesk.BLL
             }
         }
 
-        // =========================
-        // UPDATE
-        // =========================
         public (bool isOk, string message) Update(Model.Ticket ticket)
         {
             try
@@ -137,9 +128,6 @@ namespace HelpDesk.BLL
             }
         }
 
-        // =========================
-        // DELETE
-        // =========================
         public (bool isOk, string message) Delete(int ticketId)
         {
             try
@@ -160,9 +148,6 @@ namespace HelpDesk.BLL
             }
         }
 
-        // =========================
-        // CLEAR ALL
-        // =========================
         public (bool isOk, string message) ClearAll()
         {
             try
