@@ -175,5 +175,81 @@ namespace HelpDesk.UI
             dgTickets.DataSource = tickets;
 
         }
+
+        private void btnResetFilter_Click(object sender, EventArgs e)
+        {
+            cmbFilterStatus.SelectedIndex = 0;
+            cmbFilterCategory.SelectedIndex = 0;
+            btnResetFilter.Text = string.Empty;
+
+            dgTickets.DataSource = _ticketService.GetAll(null, null, null).ToList();
+        }
+
+        private void chkConfirmDelete_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkConfirmDelete.Checked)
+            {
+                chkConfirmDelete.Text = "Delete confirmation is ON";
+                chkConfirmDelete.ForeColor = Color.DarkRed;
+            }
+            else
+            {
+                chkConfirmDelete.Text = "Delete confirmation is OFF";
+                chkConfirmDelete.ForeColor = Color.Gray;
+            }
+        }
+
+        private void cmbFilterStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!this.IsHandleCreated)
+                return;
+
+            string? statusFilter = cmbFilterStatus.Text != "All"
+                ? cmbFilterStatus.Text
+                : null;
+
+            int? categoryFilter = cmbFilterCategory.SelectedValue is int id && id != 0
+                ? id
+                : null;
+
+            string? keyword = string.IsNullOrWhiteSpace(btnApplyFilter.Text)
+                ? null
+                : btnApplyFilter.Text.Trim();
+
+            dgTickets.DataSource = _ticketService
+                .GetAll(statusFilter, categoryFilter, keyword)
+                .ToList();
+        }
+
+        private void cmbFilterCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!this.IsHandleCreated)
+                return;
+
+            string? statusFilter = cmbFilterStatus.Text != "All"
+                ? cmbFilterStatus.Text
+                : null;
+
+            int? categoryFilter = cmbFilterCategory.SelectedValue is int id && id != 0
+                ? id
+                : null;
+
+            string? keyword = string.IsNullOrWhiteSpace(btnApplyFilter.Text)
+                ? null
+                : btnApplyFilter.Text.Trim();
+
+            var tickets = _ticketService.GetAll(statusFilter, categoryFilter, keyword);
+            dgTickets.DataSource = tickets.ToList();
+        }
+
+        private void dgTickets_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            
+        }
+
+        private void cmbAssignedTo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -182,6 +182,7 @@
             cmbAssignedTo.Name = "cmbAssignedTo";
             cmbAssignedTo.Size = new Size(325, 23);
             cmbAssignedTo.TabIndex = 7;
+            cmbAssignedTo.SelectedIndexChanged += cmbAssignedTo_SelectedIndexChanged;
             // 
             // label5
             // 
@@ -284,6 +285,7 @@
             chkConfirmDelete.TabIndex = 17;
             chkConfirmDelete.Text = "Confirm Delete?";
             chkConfirmDelete.UseVisualStyleBackColor = true;
+            chkConfirmDelete.CheckedChanged += chkConfirmDelete_CheckedChanged;
             // 
             // btnDeleteTicket
             // 
@@ -329,17 +331,18 @@
             btnResetFilter.Location = new Point(364, 37);
             btnResetFilter.Margin = new Padding(2);
             btnResetFilter.Name = "btnResetFilter";
-            btnResetFilter.Size = new Size(99, 20);
+            btnResetFilter.Size = new Size(99, 24);
             btnResetFilter.TabIndex = 5;
             btnResetFilter.Text = "Reset Filter";
             btnResetFilter.UseVisualStyleBackColor = true;
+            btnResetFilter.Click += btnResetFilter_Click;
             // 
             // btnApplyFilter
             // 
             btnApplyFilter.Location = new Point(273, 37);
             btnApplyFilter.Margin = new Padding(2);
             btnApplyFilter.Name = "btnApplyFilter";
-            btnApplyFilter.Size = new Size(87, 20);
+            btnApplyFilter.Size = new Size(87, 24);
             btnApplyFilter.TabIndex = 4;
             btnApplyFilter.Text = "Apply Filter";
             btnApplyFilter.UseVisualStyleBackColor = true;
@@ -348,11 +351,13 @@
             // cmbFilterStatus
             // 
             cmbFilterStatus.FormattingEnabled = true;
+            cmbFilterStatus.Items.AddRange(new object[] { "New", "In Progress", "Resolved", "Finished" });
             cmbFilterStatus.Location = new Point(141, 38);
             cmbFilterStatus.Margin = new Padding(2);
             cmbFilterStatus.Name = "cmbFilterStatus";
             cmbFilterStatus.Size = new Size(129, 23);
             cmbFilterStatus.TabIndex = 3;
+            cmbFilterStatus.SelectedIndexChanged += cmbFilterStatus_SelectedIndexChanged;
             // 
             // label10
             // 
@@ -367,11 +372,13 @@
             // cmbFilterCategory
             // 
             cmbFilterCategory.FormattingEnabled = true;
+            cmbFilterCategory.Items.AddRange(new object[] { "Hardware", "Software", "Network", "Account Access", "Others" });
             cmbFilterCategory.Location = new Point(10, 38);
             cmbFilterCategory.Margin = new Padding(2);
             cmbFilterCategory.Name = "cmbFilterCategory";
             cmbFilterCategory.Size = new Size(129, 23);
             cmbFilterCategory.TabIndex = 1;
+            cmbFilterCategory.SelectedIndexChanged += cmbFilterCategory_SelectedIndexChanged;
             // 
             // label9
             // 
@@ -392,6 +399,7 @@
             dgTickets.RowHeadersWidth = 62;
             dgTickets.Size = new Size(470, 391);
             dgTickets.TabIndex = 4;
+            dgTickets.CellContentClick += dgTickets_CellContentClick;
             // 
             // statusStrip1
             // 
